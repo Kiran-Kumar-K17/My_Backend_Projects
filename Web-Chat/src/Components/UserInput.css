@@ -1,0 +1,150 @@
+/* ---------- Global reset ---------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ---------- Chat container ---------- */
+.chat-container {
+  max-width: 600px;
+  height: 90vh;
+  margin: 20px auto;
+  border-radius: 12px;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+
+/* ---------- Messages area ---------- */
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 6px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Individual message ---------- */
+.message {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 14px;
+  max-width: 100%;
+}
+
+/* ---------- User message (right side) ---------- */
+.message.user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.message.user .bubble {
+  background-color: #198754;
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+/* ---------- Robot message (left side) ---------- */
+.message.robot {
+  align-self: flex-start;
+}
+
+.message.robot .bubble {
+  background-color: #ffffff;
+  color: #333;
+  border: 1px solid #e5e5e5;
+  border-bottom-left-radius: 4px;
+}
+
+/* ---------- Chat bubble ---------- */
+.bubble {
+  max-width: 75%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  line-height: 1.4;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+/* ---------- Avatar (optional) ---------- */
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 0 8px;
+}
+
+/* ---------- Input area ---------- */
+.chat-input-container {
+  display: flex;
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
+  gap: 10px;
+}
+
+/* ---------- Input field ---------- */
+.chat-input {
+  flex: 1;
+  padding: 12px 15px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  outline: none;
+}
+
+.chat-input:focus {
+  border-color: #198754;
+}
+
+/* ---------- Send button ---------- */
+.send-button {
+  background-color: #198754;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.send-button:hover {
+  background-color: #157347;
+}
+
+.send-button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+/* ---------- Scrollbar (optional, nice touch) ---------- */
+.chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 3px;
+}
+/* ---------- Chat header ---------- */
+.chat-header {
+  padding: 12px 10px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
+.chat-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.chat-subtitle {
+  font-size: 13px;
+  color: #777;
+  margin-top: 2px;
+}
