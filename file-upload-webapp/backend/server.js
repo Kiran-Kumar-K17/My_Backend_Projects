@@ -1,9 +1,21 @@
 import express from "express";
 import path from "path";
 import multer from "multer";
+import mongoose from "mongoose";
+import { File } from "./model/FileDB.js";
+import dotenv from "dotenv";
+
+dotenv.config({
+  path: "./.env",
+});
 
 const app = express();
 const PORT = 8000;
+
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.error(err));
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -25,13 +37,17 @@ app.get("/", (req, res) => {
   return res.render("homepage");
 });
 
-app.post("/upload", upload.single("profileImage"), (req, res) => {
-  console.log(req.body);
-  console.log(req.file);
-
+app.post("/upload", upload.single("profileImage"), async (req, res) => {
+  if (!req.file) {
+    return res.status(200).json({ Message: "Please Upload a File" });
+  }
+  await File.create({
+    name: req.file.originalname,
+    id: req.file.filename,
+  });
   return res.redirect("/");
 });
 
-app.listen(PORT, () => {
-  console.log(`Listening in Port: ${PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Listening in Port: ${process.env.PORT}`);
 });
