@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h2>Chat Room</h2>
+
+    <button onclick="logout()">Logout</button>
+    <br /><br />
+
+    <input id="msg" placeholder="Type message" />
+    <button onclick="send()">Send</button>
+
+    <ul id="list"></ul>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        window.location.href = "/login.html";
+      }
+
+      const socket = io({
+        auth: { token },
+      });
+
+      const roomId = "room1";
+
+      socket.on("connect", () => {
+        socket.emit("join-room", roomId);
+      });
+
+      socket.on("chat-history", (messages) => {
+        document.getElementById("list").innerHTML = "";
+        messages.forEach((m) => add(m.sender + ": " + m.text));
+      });
+
+      socket.on("message", (m) => {
+        add(m.sender + ": " + m.text);
+      });
+
+      function send() {
+        const input = document.getElementById("msg");
+        if (!input.value.trim()) return;
+
+        socket.emit("user-message", {
+          roomId,
+          text: input.value,
+        });
+
+        input.value = "";
+      }
+
+      function add(text) {
+        const li = document.createElement("li");
+        li.innerText = text;
+        document.getElementById("list").appendChild(li);
+      }
+
+      function logout() {
+        localStorage.removeItem("token");
+        window.location.href = "/";
+      }
+    </script>
+  </body>
+</html>
